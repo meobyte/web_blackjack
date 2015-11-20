@@ -1,27 +1,43 @@
-<h1>Blackjack</h1>
-<p>Welcome <%= session[:player_name] %></p>
+<div class="row">
+  <div class="span12">
+    <div class="well">
+      <h4>Dealer</h4>
+      <p>
+        <% session[:dealer_cards].each do |card| %>
+          <%= show_card(card) %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
 
-Dealer's cards:
-<ul>
-  <% session[:dealer_cards].each do |card| %>
-    <li><%= card.to_s %></li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="span12">
+    <div class="well">
+      <h4>Player</h4>
+      <p>
+        <% session[:player_cards].each do |card| %>
+            <%= show_card(card) %>
+        <% end %>
+      </p>
+      <p>
+        <%= session[:player_name]%> has <%= hand_total(session[:player_cards]) %>
+      </p>
+    </div>
+  </div>
+</div>
 
-Player's cards:
-<ul>
-  <% session[:player_cards].each do |card| %>
-    <li><%= card.to_s %></li>
-  <% end %>
-</ul>
-<p>
-  <%= session[:player_name]%> has <%= hand_total(session[:player_cards]) %>
-</p>
 <% if @show_action_buttons %>
-  <form action="/game/player/hit" method="post">
-    <input type="submit" class="btn btn-success" value="Hit" />
-  </form>
-  <form action="/game/player/stay" method="post">
-    <input type="submit" class="btn btn-warning" value="Stay" />
-  </form>
+<div class="row">
+  <div class="span3">
+    <form action="/game/player/hit" method="post">
+      <input type="submit" class="btn btn-large btn-success btn-block" value="Hit" />
+    </form>
+  </div>
+  <div class="span3">
+    <form action="/game/player/stay" method="post">
+      <input type="submit" class="btn btn-large btn-warning btn-block" value="Stay" />
+    </form>
+  </div>
+</div>
 <% end %>

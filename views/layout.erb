@@ -10,13 +10,14 @@
       <div class="navbar">
         <div class="navbar-inner">
           <a class="brand">Blackjack</a>
-              <ul class="nav">
-                <li><a href="/new_game">New Game</a></li>
-              </ul>
+          <ul class="nav">
+            <li><a href="/new_game">New Game</a></li>
+            <li class="divider-vertical"></li>
+            <li><a>Welcome <%= session[:player_name] %></a></li>
+          </ul>
+
         </div>
       </div>
-
-
       <%if @error %>
         <div class="alert alert-error"><%=@error%></div>
       <% end %>
@@ -25,6 +26,6 @@
       <% end %>
         <%= yield %>
 
-  </div>
+    </div>
   </body>
 </html>

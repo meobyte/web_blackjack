@@ -23,8 +23,25 @@ helpers do
     total
   end
 
-  def show_card(cards)
+  def show_card(card)
+    suit = case card[1]
+    when 'C' then 'clubs'
+    when 'D' then 'diamonds'
+    when 'H' then 'hearts'
+    when 'S' then 'spades'
+    end
 
+    rank = card[0]
+    if rank.to_i == 0
+      rank = case card[0]
+      when 'J' then 'jack'
+      when 'Q' then 'queen'
+      when 'K' then 'king'
+      when 'A' then 'ace'
+      end
+    end
+
+    "<img src='/images/cards/#{suit}_#{rank}.jpg' class='card-image'/>"
   end
 end
 
