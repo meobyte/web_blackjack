@@ -27,25 +27,31 @@ helpers do
 
   end
 end
+
+before do
+  @show_action_buttons = true
+end
+
 get '/' do
   if session[:player_name]
     redirect '/game'
   else
-    redirect '/set_name'
+    redirect '/new_game'
   end
 end
 
-get '/set_name' do
-  erb :set_name
+get '/new_game' do
+  erb :new_game
 end
 
-post '/set_name' do
+post '/new_game' do
+  if params[:player_name].empty?
+    @error = "Please enter your name."
+    halt erb(:new_game)
+  end
+
   session[:player_name] = params[:player_name]
   redirect '/game'
-end
-
-get '/bet' do
-
 end
 
 get '/game' do
@@ -60,5 +66,23 @@ get '/game' do
     session[:player_cards] << session[:deck].pop
   end
 
+  erb :game
+end
+
+post '/game/player/hit' do
+  session[:player_cards] << session[:deck].pop
+  player_total = hand_total(session[:player_cards])
+
+  if player_total > 21
+    @error = "You busted!"
+    @show_action_buttons = false
+  end
+
+  erb :game
+end
+
+post '/game/player/hit' do
+  @success = "You have chosen to stay."
+  @show_action_buttons = false
   erb :game
 end

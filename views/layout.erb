@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My First App</title>
+    <title>Blackjack</title>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/application.css">
   </head>
-  <body style="padding-top: 50px;">
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-            <ul class="nav">
-              <li><a href="/">Nav Item</a></li>
-            </ul>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand">Blackjack</a>
+              <ul class="nav">
+                <li><a href="/new_game">New Game</a></li>
+              </ul>
         </div>
       </div>
-    </div>
 
-  <div class="container">
-    <%if @error %>
-      <div class="alert alert-error"><%=@error%></div>
-    <% end %>
-      <%= yield %>
+
+      <%if @error %>
+        <div class="alert alert-error"><%=@error%></div>
+      <% end %>
+      <%if @success %>
+        <div class="alert alert-success"><%=@sucess%></div>
+      <% end %>
+        <%= yield %>
+
   </div>
   </body>
 </html>
