@@ -91,15 +91,17 @@ post '/game/player/hit' do
   player_total = hand_total(session[:player_cards])
 
   if player_total > 21
-    @error = "You busted!"
+    @error = "#{session[:player_name]} busted!"
     @show_action_buttons = false
+  elsif player_total == 21
+    @success = ""
   end
 
   erb :game
 end
 
-post '/game/player/hit' do
-  @success = "You have chosen to stay."
+post '/game/player/stay' do
+  @success = "#{session[:player_name]} stays."
   @show_action_buttons = false
   erb :game
 end
