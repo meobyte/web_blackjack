@@ -19,12 +19,24 @@
         </div>
       </div>
       <%if @error %>
-        <div class="alert alert-error"><%=@error%></div>
+        <div class="alert alert-error alert-compare"><%=@error%></div>
       <% end %>
       <%if @success %>
-        <div class="alert alert-success"><%=@success%></div>
+        <div class="alert alert-success alert-compare"><%=@success%></div>
       <% end %>
-        <%= yield %>
+      <%= yield %>
+      <% if @replay %>
+        <div class="row">
+          <div class="span3">
+            <a href="/game" class="btn btn-primary btn-large btn-block">Play Again</a>
+          </div>
+          <div class="span3">
+            <a href="/game_over" class="btn btn-large btn-block">Exit Game</a>
+          </div>
+
+          </div>
+        </div>
+      <% end %>
 
     </div>
   </body>
