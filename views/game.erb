@@ -27,12 +27,13 @@
 <div class="row">
   <div class="span12">
     <div class="well">
-      <h4><%=session[:player_name]%> has <%= hand_total(session[:player_cards]) %></h4>
+      <h4><%=session[:player_name]%> has <%= hand_total(session[:player_cards]) %>. Pot: <%= session[:player_pot] %>, Bet: <%= session[:player_bet] %></h4>
       <p>
         <% session[:player_cards].each do |card| %>
             <%= show_card(card) %>
         <% end %>
       </p>
+      <h5></h5>
     </div>
   </div>
 </div>
