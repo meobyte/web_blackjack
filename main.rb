@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'sinatra'
 
-use Rack::Session::Cookie, :key => 'rack.session',
-                           :path => '/',
-                           :secret => 'lem30zeW'
+use Rack::Session::Cookie, key: 'rack.session',
+                           path: '/',
+                           secret: 'lem30zeW'
 
 BLACKJACK_SCORE = 21
 DEALER_MIN = 17
@@ -12,10 +12,10 @@ helpers do
   def hand_total(cards)
     total = 0
     ranks = cards.map { |card| card[0] }
-    aces_count = ranks.count("A")
+    aces_count = ranks.count('A')
 
     ranks.each do |rank|
-      if rank == "A"
+      if rank == 'A'
         total += 11
       else
         total += (rank.to_i == 0 ? 10 : rank.to_i)
@@ -27,21 +27,21 @@ helpers do
   end
 
   def show_card(card)
-    suit = case card[1]
-    when 'C' then 'clubs'
-    when 'D' then 'diamonds'
-    when 'H' then 'hearts'
-    when 'S' then 'spades'
-    end
+    suit =  case card[1]
+            when 'C' then 'clubs'
+            when 'D' then 'diamonds'
+            when 'H' then 'hearts'
+            when 'S' then 'spades'
+            end
 
     rank = card[0]
     if rank.to_i == 0
-      rank = case card[0]
-      when 'J' then 'jack'
-      when 'Q' then 'queen'
-      when 'K' then 'king'
-      when 'A' then 'ace'
-      end
+      rank =  case card[0]
+              when 'J' then 'jack'
+              when 'Q' then 'queen'
+              when 'K' then 'king'
+              when 'A' then 'ace'
+              end
     end
 
     "<img src='/images/cards/#{suit}_#{rank}.jpg' class='card-image'/>"
@@ -88,7 +88,7 @@ end
 
 post '/new_game' do
   if params[:player_name].empty?
-    @error = "Please enter your name."
+    @error = 'Please enter your name.'
     halt erb(:new_game)
   end
 
@@ -103,7 +103,7 @@ end
 
 post '/bet' do
   if params[:bet_amount].nil? || params[:bet_amount].to_i == 0
-    @error = "Must make a bet."
+    @error = 'Must make a bet.'
     halt erb(:bet)
   elsif params[:bet_amount].to_i > session[:player_pot]
     @error = "Bet amount can't be more than you have($#{session[:player_pot]})."
@@ -117,8 +117,8 @@ end
 get '/game' do
   session[:turn] = session[:player_name]
 
-  suits = ['H', 'D', 'C', 'S']
-  ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
+  suits = %w(H D C S)
+  ranks = %w(2 3 4 5 6 7 8 9 10 J Q K A)
   session[:deck] = ranks.product(suits).shuffle!
 
   session[:dealer_cards] = []
@@ -152,12 +152,12 @@ post '/game/player/stay' do
 end
 
 get '/game/dealer' do
-  session[:turn] = "dealer"
+  session[:turn] = 'dealer'
   @show_action_buttons = false
   dealer_total = hand_total(session[:dealer_cards])
 
   if dealer_total == BLACKJACK_SCORE
-    loser!("Dealer hit blackjack.")
+    loser!('Dealer hit blackjack.')
   elsif dealer_total > BLACKJACK_SCORE
     winner!("Dealer busted with #{dealer_total}.")
   elsif dealer_total >= DEALER_MIN
@@ -181,11 +181,13 @@ get '/game/compare' do
   dealer_total = hand_total(session[:dealer_cards])
 
   if player_total < dealer_total
-    loser!("#{session[:player_name]} stayed at #{player_total}, and the dealer stayed at #{dealer_total}.")
+    loser!("#{session[:player_name]} stayed at #{player_total},
+            and the dealer stayed at #{dealer_total}.")
   elsif player_total > dealer_total
-    winner!("#{session[:player_name]} stayed at #{player_total}, and the dealer stayed at #{dealer_total}.")
+    winner!("#{session[:player_name]} stayed at #{player_total},
+            and the dealer stayed at #{dealer_total}.")
   else
-    tie!("Both #{session[:player_name]} and the dealer stayed at #{player_total}.")
+    tie!("#{session[:player_name]} and the dealer stayed at #{player_total}.")
   end
 
   erb :game, layout: false
