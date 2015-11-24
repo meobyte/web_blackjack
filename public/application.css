@@ -15,3 +15,41 @@
 .btn-show-card {
   margin: 100px 0;
 }
+.span4, .span8 {box-sizing: border-box;}
+.chips input[type=radio] {
+  display:none;
+}
+.chips input[type=radio]:checked + .chip {
+  transform: translate(0, -70px)
+}
+.chip {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  margin: 70px 30px 30px;
+  border-radius: 150px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  border: 10px dotted #fff;
+  color: #eee;
+  transition: transform .5s ease;
+}
+.chip label {
+  text-align: center;
+  line-height: 70px;
+  font-size: 1.7em;
+}
+.white {
+  color: #333;
+  background: #eee;
+  border: 10px dotted #339;
+}
+.red { background: #d00 }
+
+.green { background: #093}
+
+.blue { background: #00d }
+
+.black {
+  background: #333;
+  border: 10px dotted #ccc;
+}

@@ -5,7 +5,8 @@
     <fieldset>
       <legend>Enter your name to start a new game</legend>
     <label for="player_name">Name:
-      <input type="text" name="player_name" id="player_name" required />
+      <input type="text" name="player_name" pattern="[a-zA-Z0-9]+"
+             title="Name can contain letters and numbers" id="player_name" required />
     </label>
     <input type="submit" class="btn btn-primary" />
   </fieldset>

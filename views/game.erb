@@ -1,4 +1,14 @@
 <div class="row">
+  <%if @error %>
+    <div class="alert alert-error span8"><%=@error%></div>
+  <%elsif @success %>
+    <div class="alert alert-success span8"><%=@success%></div>
+  <% else %>
+    <div class="span8">&nbsp;</div>
+  <% end %>
+    <div class="alert alert-info span4">Pot: <%= session[:player_pot] %>, Bet: <%= session[:player_bet] %></div>
+</div>
+<div class="row">
   <div class="span12">
     <div class="well clearfix">
       <h4>Dealer
@@ -17,7 +27,7 @@
       </p>
       <% if @show_dealer_action %>
         <form class="pull-left show-dealer-card" action='/game/dealer/hit' method='post'>
-          <input type='submit' class='btn btn-inverse btn-show-card' value='Show Card &rarr;'>
+          <input type='submit' class='btn btn-inverse btn-show-card ajaxify' value='Show Card &rarr;'>
         </form>
       <% end %>
     </div>
@@ -27,13 +37,12 @@
 <div class="row">
   <div class="span12">
     <div class="well">
-      <h4><%=session[:player_name]%> has <%= hand_total(session[:player_cards]) %>. Pot: <%= session[:player_pot] %>, Bet: <%= session[:player_bet] %></h4>
+      <h4><%=session[:player_name]%> has <%= hand_total(session[:player_cards]) %>.</h4>
       <p>
         <% session[:player_cards].each do |card| %>
             <%= show_card(card) %>
         <% end %>
       </p>
-      <h5></h5>
     </div>
   </div>
 </div>
@@ -42,13 +51,23 @@
 <div class="row">
   <div class="span3">
     <form action="/game/player/hit" method="post">
-      <input type="submit" class="btn btn-large btn-success btn-block" value="Hit" />
+      <input type="submit" class="btn btn-large btn-success btn-block ajaxify" value="Hit" />
     </form>
   </div>
   <div class="span3">
     <form action="/game/player/stay" method="post">
-      <input type="submit" class="btn btn-large btn-warning btn-block" value="Stay" />
+      <input type="submit" class="btn btn-large btn-warning btn-block ajaxify" value="Stay" />
     </form>
   </div>
 </div>
+<% end %>
+<% if @replay %>
+  <div class="row">
+    <div class="span3">
+      <a href="/bet" class="btn btn-primary btn-large btn-block">Play Again</a>
+    </div>
+    <div class="span3">
+      <a href="/game_over" class="btn btn-large btn-block">Exit Game</a>
+    </div>
+  </div>
 <% end %>

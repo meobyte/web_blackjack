@@ -4,7 +4,7 @@
     <title>Blackjack</title>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/application.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/application.js"></script>
   </head>
   <body>
@@ -15,29 +15,17 @@
           <ul class="nav">
             <li><a href="/new_game">New Game</a></li>
             <li class="divider-vertical"></li>
-            <li><a>Welcome <%= session[:player_name] %></a></li>
+            <li><a>
+              <% if session[:player_name] %>
+                Welcome, <span class='player-name'><%=session[:player_name]%></span>
+              <% end  %>
+            </a></li>
           </ul>
-
         </div>
       </div>
-      <%if @error %>
-        <div class="alert alert-error alert-compare"><%=@error%></div>
-      <% end %>
-      <%if @success %>
-        <div class="alert alert-success alert-compare"><%=@success%></div>
-      <% end %>
-      <%= yield %>
-      <% if @replay %>
-        <div class="row">
-          <div class="span3">
-            <a href="/bet" class="btn btn-primary btn-large btn-block">Play Again</a>
-          </div>
-          <div class="span3">
-            <a href="/game_over" class="btn btn-large btn-block">Exit Game</a>
-          </div>
-        </div>
-      <% end %>
-
+      <div id="page-inner">
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>

@@ -1,8 +1,39 @@
-<h3>Make a bet for this round.</h3>
-<p><%= session[:player_name] %> has <%= session[:player_pot].to_i %></p>
-
-<form action='/bet' method='post'>
-  <input type="text" name="bet_amount" />
-  <br />
-  <input type="submit" value="Make a bet" class="btn" />
-</form>
+<% if session[:player_pot].to_i < 1 %>
+  <p class="alert alert-error">Oh, snap! <%= session[:player_name] %> is out of dough.</p>
+  <a href="/new_game" class="btn btn-large span3">Start Over</a>
+<% else %>
+  <h3>Make a bet for this round.</h3>
+  <p><%= session[:player_name] %> has <%= session[:player_pot].to_i %></p>
+  <form action='/bet' method='post' class="chips text-center">
+    <input type="radio" name="bet_amount" id="chip1" value="1" />
+    <div class="chip white">
+      <label for="chip1">$1</label>
+    </div>
+    <% if session[:player_pot].to_i > 5 %>
+      <input type="radio" name="bet_amount" id="chip5" value="5" />
+      <div class="chip red">
+        <label for="chip5">$5</label>
+      </div>
+    <% end %>
+    <% if session[:player_pot].to_i > 10 %>
+      <input type="radio" name="bet_amount" id="chip10" value="10" />
+      <div class="chip blue">
+        <label for="chip10">$10</label>
+      </div>
+    <% end %>
+    <% if session[:player_pot].to_i > 25 %>
+      <input type="radio" name="bet_amount" id="chip25" value="25" />
+      <div class="chip green">
+        <label for="chip25">$25</label>
+      </div>
+    <% end %>
+    <% if session[:player_pot].to_i > 100 %>
+      <input type="radio" name="bet_amount" id="chip100" value="100" />
+      <div class="chip black">
+        <label for="chip100">$100</label>
+      </div>
+    <% end %>
+    <br />
+    <input type="submit" value="Make a bet" class="btn btn-large span3" />
+  </form>
+<% end %>

@@ -82,6 +82,7 @@ end
 
 get '/new_game' do
   session[:player_pot] = INITIAL_POT
+  session[:player_name] = nil
   erb :new_game
 end
 
@@ -141,7 +142,7 @@ post '/game/player/hit' do
     loser!("#{session[:player_name]} busted with #{player_total}.")
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/player/stay' do
@@ -165,7 +166,7 @@ get '/game/dealer' do
     @show_dealer_action = true
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/dealer/hit' do
@@ -187,7 +188,7 @@ get '/game/compare' do
     tie!("Both #{session[:player_name]} and the dealer stayed at #{player_total}.")
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game_over' do
